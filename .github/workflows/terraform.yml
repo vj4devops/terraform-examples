@@ -17,15 +17,12 @@ jobs:
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: 1.6.6
-
-    - name: change directory
-      run: cd s3
-
+    
     - name: Terraform Init
-      run: terraform init
+      run: terraform -chdir=s3 init
 
     - name: Terraform Plan
-      run: terraform plan
+      run: terraform -chdir=s3 plan
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve
+      run: terraform -chdir=s3 apply -auto-approve
