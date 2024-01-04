@@ -20,7 +20,7 @@ jobs:
 
     - name: Build
       run: |
-        CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main lambda/main.go
+        CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main main.go
         zip deployment.zip main
 
     - name: Upload artifact
