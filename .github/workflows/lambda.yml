@@ -1,23 +1,33 @@
-name: Terraform
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - main
+      - main  
 
 jobs:
-  deploy-s3:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
 
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v3
+    - name: Set up Go
+      uses: actions/setup-go@v2
       with:
-        terraform_version: 1.6.6
-    - name:                    #here is where build and zip should go (remove this later)
+        go-version: 1.6.6  
+
+    - name: Build
+      run: |
+        CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main lambda/main.go
+        zip deployment.zip main
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: deployment
+        path: deployment.zip
 
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4

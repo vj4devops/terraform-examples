@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_s3_bucket" "example_bucket" {
   bucket = "flaskapp-vj-test"  # Replace with your desired bucket name
 
-  acl    = "private"
+  # acl    = "private"
 
   # Enable versioning for the bucket
   versioning {
